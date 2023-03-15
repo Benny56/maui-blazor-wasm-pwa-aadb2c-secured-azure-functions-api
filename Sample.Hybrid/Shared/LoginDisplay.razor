@@ -1,0 +1,31 @@
+﻿@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager Navigation
+
+<AuthorizeView>
+    <Authorized>
+        Hello, @context.User.Identity?.Name!
+        <button class="nav-link btn btn-link" @onclick="Logout">Log out</button>
+    </Authorized>
+    <NotAuthorized>
+        <button class="nav-link btn btn-link" @onclick="Login">Log in</button>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+
+    public async Task Login()
+    {
+        var provider = authStateProvider as CustomAuthenticationStateProvider;
+        await provider.LoginAsync();
+    }
+
+
+    public async Task Logout()
+    {
+        var provider = authStateProvider as CustomAuthenticationStateProvider;
+        await provider.LogoutAsync();
+        Navigation.NavigateTo("/");
+    }
+
+}

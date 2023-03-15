@@ -1,0 +1,35 @@
+﻿@page "/authentication/{action}"
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject NavigationManager navigation;
+
+<RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="LoggedIn">
+    <LoggingIn>
+        <p>Der Authentifizierungsstatus wird überprüft...</p>
+    </LoggingIn>
+    <CompletingLoggingIn>
+        <p>Anmeldung wird abgeschlossen...</p>
+    </CompletingLoggingIn>
+    <LogInFailed>
+        <p>Anmeldung abgebrochen</p>
+    </LogInFailed>
+    <LogOut>Sie werden abgemeldet...</LogOut>
+    <CompletingLogOut>
+        <p>Abmeldung wird abgeschlossen...</p>
+    </CompletingLogOut>
+    <LogOutSucceeded>
+        <p>Sie sind abgemeldet</p>
+    </LogOutSucceeded>
+    <LogOutFailed>
+        <p>Sie konnten nicht abgemeldet werden</p>
+    </LogOutFailed>
+</RemoteAuthenticatorView>
+
+@code {
+
+    [Parameter] public string? Action { get; set; }
+
+    void LoggedIn()
+    {
+        navigation.NavigateTo("/", forceLoad: true);
+    }
+}
